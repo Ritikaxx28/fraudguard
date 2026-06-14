@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scan History — FraudGuard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0f172a; color: #e2e8f0; }
+    .card { background: #1e293b; border: 1px solid #334155; }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-blue-400">📋 Scan History</h1>
+      <a href="/" class="text-blue-400 hover:underline">← Back</a>
+    </div>
+
+    {% if scans %}
+    <div class="space-y-3">
+      {% for scan in scans %}
+      <div class="card rounded-xl p-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs text-slate-500">{{ scan[5] }}</span>
+          <p class="text-white mt-1 text-sm truncate max-w-md">{{ scan[1][:80] }}{% if scan[1]|length > 80 %}...{% endif %}</p>
+          <span class="text-xs px-2 py-0.5 rounded mt-1 inline-block
+            {% if scan[4] == 'SCAM' %}bg-red-900 text-red-300
+            {% elif scan[4] == 'SUSPICIOUS' %}bg-yellow-900 text-yellow-300
+            {% else %}bg-green-900 text-green-300{% endif %}">
+            {{ scan[4] }} — {{ scan[3] }}/100
+          </span>
+        </div>
+        <a href="/result/{{ scan[0] }}" class="text-blue-400 text-sm hover:underline ml-4">Details →</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center text-slate-500 mt-20">No scans yet. Go check something!</div>
+    {% endif %}
+  </div>
+</body>
+</html>
