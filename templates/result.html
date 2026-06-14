@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scan Result — FraudGuard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0f172a; color: #e2e8f0; }
+    .card { background: #1e293b; border: 1px solid #334155; }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-blue-400">🛡️ Scan Result</h1>
+      <a href="/" class="text-blue-400 hover:underline">← New Scan</a>
+    </div>
+
+    <!-- Verdict Banner -->
+    <div class="card rounded-2xl p-6 mb-4 text-center">
+      {% if scan[4] == 'SCAM' %}
+        <div class="text-5xl mb-2">⛔</div>
+        <div class="text-2xl font-bold text-red-400">THIS IS A SCAM</div>
+        <div class="mt-2 text-sm text-slate-400">Risk Score: {{ scan[3] }} / 100</div>
+      {% elif scan[4] == 'SUSPICIOUS' %}
+        <div class="text-5xl mb-2">⚠️</div>
+        <div class="text-2xl font-bold text-yellow-400">SUSPICIOUS — Be Careful</div>
+        <div class="mt-2 text-sm text-slate-400">Risk Score: {{ scan[3] }} / 100</div>
+      {% else %}
+        <div class="text-5xl mb-2">✅</div>
+        <div class="text-2xl font-bold text-green-400">LOOKS SAFE</div>
+        <div class="mt-2 text-sm text-slate-400">Risk Score: {{ scan[3] }} / 100</div>
+      {% endif %}
+    </div>
+
+    <!-- Original Message -->
+    <div class="card rounded-xl p-4 mb-4">
+      <p class="text-sm text-slate-400 mb-1 font-medium">📩 Original message:</p>
+      <p class="text-white">{{ scan[1] }}</p>
+    </div>
+
+    <!-- Explanation -->
+    <div class="card rounded-xl p-4 mb-4">
+      <p class="text-sm text-slate-400 mb-1 font-medium">📋 Explanation:</p>
+      <p class="text-white text-lg">{{ scan[5] }}</p>
+    </div>
+
+    <!-- Tamil -->
+    {% if scan[6] %}
+    <div class="card rounded-xl p-4 mb-4">
+      <p class="text-sm text-slate-400 mb-1 font-medium">🗣️ தமிழில் (Tamil):</p>
+      <p class="text-white text-lg">{{ scan[6] }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Scanned At -->
+    <div class="text-center text-slate-500 text-sm mt-4">
+      Scanned on {{ scan[7] }}
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex gap-3 mt-6">
+      <a href="/" class="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all">
+        🔍 New Scan
+      </a>
+      <a href="/history" class="flex-1 text-center bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition-all">
+        📋 History
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>
